@@ -1,47 +1,10 @@
 import express from "express";
-import {v4 as uuid} from "uuid";
+import {port} from "./src/config/constants.js";
+import {Cache} from "./src/Cache.js";
 
 const app = express();
 
 app.use(express.json());
-
-const port = process.env.PORT || 8080;
-
-const isProduction = process.env.NODE_ENV === "development";
-
-class Cache {
-	constructor() {
-		this.cache = new Map();
-		if (!isProduction) {
-			this.cache.set("test", {wtf: false});
-		}
-	}
-
-	create(payload) {
-		const key = uuid();
-		this.cache.set(key, payload);
-		return key;
-	}
-
-	keys() {
-		return [...this.cache.keys()];
-	}
-
-	get(key) {
-		return this.cache.get(key);
-	}
-
-	update(key, payload) {
-		const context = this.get(key);
-		this.cache.set(key, {...context, ...payload});
-		console.log(`Updated cache with key ${key}`, this.get(key));
-		return this.get(key);
-	}
-
-	remove(key) {
-		return this.cache.delete(key);
-	}
-}
 
 const cache = new Cache();
 
