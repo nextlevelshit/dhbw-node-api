@@ -7,11 +7,14 @@ app.use(express.json());
 
 const port = process.env.PORT || 8080;
 
+const isProduction = process.env.NODE_ENV === "development";
+
 class Cache {
     constructor() {
         this.cache = new Map();
-
-        this.cache.set("test", { wtf: false });
+        if (!isProduction) {
+            this.cache.set("test", { wtf: false });
+        }
     }
 
     create(payload) {
