@@ -2,11 +2,11 @@ import express from "express";
 import {port} from "./src/config/constants.js";
 import {Cache} from "./src/Cache.js";
 
+
+const cache = new Cache();
 const app = express();
 
 app.use(express.json());
-
-const cache = new Cache();
 
 app.get("/api", async (req, res) => {
 	res.json({keys: cache.keys()});
