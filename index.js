@@ -9,40 +9,28 @@ const app = express();
 app.use(express.json());
 
 app.get("/api", async (req, res) => {
-	res.json({keys: cache.keys()});
+	console.log("GET /api requested");
 });
 
 app.post("/api", async (req, res) => {
-	const payload = req.body || {};
-	const key = cache.create(payload);
-	console.log("Cache created:", key);
-	res.json({key});
+	console.log("POST /api requested");
+	res.json({status: true});
 });
 
 app.all("/api/:key", async (req, res) => {
-	const key = req.params.key;
-	const context = cache.get(key);
-	const payload = req.body || {};
-
-	if (!context) {
-		res.status(404).json({error: "Could not find key", key});
-		return;
-	}
-
 	try {
 		switch (req.method) {
 			case "GET":
-				res.json({context});
+				console.log("GET /api/:key requested");
+				res.json({status: true});
 				break;
 			case "PUT":
-				res.send({context: cache.update(key, payload)});
+				console.log("PUT /api/:key requested");
+				res.send({status: true});
 				break;
 			case "DELETE":
-				if (cache.remove(key)) {
-					res.json({key});
-				} else {
-					res.status(500).json({error: `Could not delete cache with key ${key}`});
-				}
+				console.log("DELETE /api/:key requested");
+				res.send({status: true});
 		}
 	} catch (error) {
 		console.log("Error:", error.message);
