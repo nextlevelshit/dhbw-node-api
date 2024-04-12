@@ -10,6 +10,8 @@ app.use(express.json());
 
 app.get("/api", async (req, res) => {
 	console.log("GET /api requested");
+	const keys = cache.keys();
+	res.status(200).json({keys});
 });
 
 app.post("/api", async (req, res) => {
@@ -26,11 +28,11 @@ app.all("/api/:key", async (req, res) => {
 				break;
 			case "PUT":
 				console.log("PUT /api/:key requested");
-				res.send({status: true});
+				res.json({status: true});
 				break;
 			case "DELETE":
 				console.log("DELETE /api/:key requested");
-				res.send({status: true});
+				res.json({status: true});
 		}
 	} catch (error) {
 		console.log("Error:", error.message);

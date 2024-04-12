@@ -4,9 +4,7 @@ import {isProduction} from "./config/constants.js";
 export class Cache {
 	constructor() {
 		this.cache = new Map();
-		if (!isProduction) {
-			this.cache.set("test", {wtf: false});
-		}
+		this.cache.set("test", {wtf: false});
 	}
 
 	create(payload) {
