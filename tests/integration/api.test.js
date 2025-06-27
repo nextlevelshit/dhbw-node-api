@@ -40,14 +40,18 @@ describe("API Integration Tests", () => {
 			const context = cache.get(key);
 
 			if (!context) {
-				return res.status(404).json({ error: "Could not find key", key });
+				return res
+					.status(404)
+					.json({ error: "Could not find key", key });
 			}
 
 			try {
 				if (cache.remove(key)) {
 					res.json({ key });
 				} else {
-					res.status(500).json({ error: `Could not delete cache with key ${key}` });
+					res.status(500).json({
+						error: `Could not delete cache with key ${key}`,
+					});
 				}
 			} catch (error) {
 				res.status(500).json({ error: error.message });
