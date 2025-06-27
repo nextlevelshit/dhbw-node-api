@@ -1,12 +1,8 @@
-import {v4 as uuid} from "uuid";
-import {isProduction} from "./config/constants.js";
+import { v4 as uuid } from "uuid";
 
 export class Cache {
 	constructor() {
 		this.cache = new Map();
-		if (!isProduction) {
-			this.cache.set("test", {wtf: false});
-		}
 	}
 
 	create(payload) {
@@ -25,7 +21,7 @@ export class Cache {
 
 	update(key, payload) {
 		const context = this.get(key);
-		this.cache.set(key, {...context, ...payload});
+		this.cache.set(key, { ...context, ...payload });
 		console.log(`Updated cache with key ${key}`, this.get(key));
 		return this.get(key);
 	}
